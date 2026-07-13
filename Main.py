@@ -164,7 +164,7 @@ async def Weather(ctx, wtype = None):
         await ctx.send("Follow your command with either F for Farenheit, C for Celsius, or K for Kelvin")
 
 @bot.command()
-@cooldown(1, 10000)
+@cooldown(1, 5)
 async def Survey(ctx):
     embed1 = discord.Embed(title = "Welcome to the OFFICIAL, SUPER-SPECIAL, SERVER QUESTIONNAIRE™", color = purple, description = "You will be asked a series of three 'yes/no' questions. Your answer to these questions determines your roles within the server. Each role has associated channels & pings. Are you ready?")
     embed2 = discord.Embed(title = "🪨 ROCK & STONE ⛏️", color = purple, description = "Do you play, or have you ever played, Deep Rock Galactic?\n(Both choices grant access to videogame-related channels)")
@@ -294,7 +294,7 @@ async def Survey(ctx):
         await ctx.send(f"You took too long to react, {user.mention}. Session exited.")
 
 @bot.command()
-@cooldown(1, 10000)
+@cooldown(1, 5)
 async def GameRoles(ctx):
     game_roles_embed = discord.Embed(title = "🎮 GAME ROLES", color = purple, description = ("While 'Game Roles' is active, a user can assign themselves roles to receive pings about specific video games.\n"
                                                                                           "Enter **the role** you would like to receive based on its associated games in the following list:\n"
