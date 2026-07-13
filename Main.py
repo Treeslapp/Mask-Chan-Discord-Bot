@@ -44,11 +44,13 @@ async def on_member_join(member):
 async def on_message(message):
     if message.author == bot.user:
         return
-    if "thank you mask-chan" in message.content.lower():
+    if message.content.lower() == "thank you mask-chan":
         await message.channel.send("No problem, glad I could help! :D")
-    elif "thank you mask chan" in message.content.lower():
+        
+    if message.content.lower() == "thank you mask chan":
         await message.channel.send("No problem, glad I could help! :D")
-    elif "thank you maskchan" in message.content.lower():
+        
+    if message.content.lower() == "thank you maskchan":
         await message.channel.send("No problem, glad I could help! :D")
         
     await bot.process_commands(message)
@@ -58,7 +60,7 @@ async def on_message(message):
     if message.author == bot.user:
         return
     if "filip" in message.content.lower() or "philip" in message.content.lower():
-        await message.channel.send("We don't talk about him... :Dread:")
+        await message.channel.send("We don't talk about him... <:Dread:1165987399671758939>")
 
     await bot.process_commands(message)
 
