@@ -218,7 +218,13 @@ async def Survey(ctx):
                 await ctx.author.add_roles(role_S)
                 await ctx.send(f"You have received a role: '{role_S}'")
 
-            elif str(reaction.emoji) == survey_reactions[1] and role_S and role_HS:
+            elif str(reaction.emoji) == survey_reactions[0] and not role_S:
+                await ctx.send(f"The role '{roles[0]}' does not exist")
+
+            elif str(reaction.emoji) == survey_reactions[0] and not role_HS:
+                await ctx.send(f"The role '{roles[1]}' does not exist")
+
+            if str(reaction.emoji) == survey_reactions[1] and role_S and role_HS:
                 await ctx.author.add_roles(role_HS)
                 await ctx.author.remove_roles(role_S)
                 await ctx.send(f"You have received a role: '{role_HS}'")
@@ -228,12 +234,6 @@ async def Survey(ctx):
 
             elif str(reaction.emoji) == survey_reactions[1] and not role_S:
                 await ctx.send(f"The role '{roles[0]}' does not exist")
-
-            elif str(reaction.emoji) == survey_reactions[0] and not role_S:
-                await ctx.send(f"The role '{roles[0]}' does not exist")
-
-            elif str(reaction.emoji) == survey_reactions[0] and not role_HS:
-                await ctx.send(f"The role '{roles[1]}' does not exist")
 
             poll_message3 = await ctx.send(embed = embed3) #Anime roles
 
