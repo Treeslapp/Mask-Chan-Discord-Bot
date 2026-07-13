@@ -39,6 +39,17 @@ async def on_ready():
 async def on_member_join(member):
     await member.send(f"Welcome to the cult, {member.mention}. You can assign yourself server roles by typing 'MSurvey' and 'MGameRoles' in channels that have access to Mask-chan")
 
+@bot.event
+async def on_message(message):
+    if message.author == bot.user:
+        return
+        
+    if "thank you mask-chan" in message.content.lower() or "thank you mask chan" in message.content.lower() or "thank you maskchan" in message.content.lower():
+        await message.channel.send("No problem, glad I could help! :D")
+        
+    if filip in message.content.lower() or philip in message.content.lower():
+        await message.channel.send("We don't talk about him... :Dread:"
+
 #Commands:
 
 @bot.command()
