@@ -214,6 +214,8 @@ async def Survey(ctx):
 
             reaction, user = await bot.wait_for("reaction_add", timeout = 60.0, check = check_reaction2)
 
+            Survey.reset_cooldown(ctx)
+
             if str(reaction.emoji) == survey_reactions[0] and role_S and role_HS: #Need to make these commands give roles
                 await ctx.author.remove_roles(role_HS)
                 await ctx.author.add_roles(role_S)
@@ -291,8 +293,6 @@ async def Survey(ctx):
         poll_exit = await ctx.send(embed = embed_exit)
         await ctx.send(f"You took too long to react, {user.mention}. Session exited.")
 
-    Survey.reset_cooldown(ctx)
-
 @bot.command()
 @cooldown(1, 10000)
 async def GameRoles(ctx):
@@ -336,6 +336,8 @@ async def GameRoles(ctx):
         while checking_roles:
             role_select = (await bot.wait_for("message", timeout = 60.0, check = role_check)).content
 
+            GameRoles.reset_cooldown(ctx)
+
             for role, games in game_roles.items():
                 if role_select in games:
                     await ctx.send(f"'{role_select}' is a video game. Please type the role associated with that game.")
@@ -366,8 +368,6 @@ async def GameRoles(ctx):
     except asyncio.TimeoutError:
         await ctx.send(f"You took too long to send a message, {ctx.author.mention}. Session exited")
         checking_roles = False
-        
-    GameRoles.reset_cooldown(ctx)
 
 @bot.command()
 @cooldown(1, 10000)
