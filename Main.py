@@ -47,12 +47,6 @@ async def on_message(message):
     if message.content.lower() == "thank you mask-chan":
         await message.channel.send("No problem, glad I could help! :D")
         
-    if message.content.lower() == "thank you mask chan":
-        await message.channel.send("No problem, glad I could help! :D")
-        
-    if message.content.lower() == "thank you maskchan":
-        await message.channel.send("No problem, glad I could help! :D")
-        
     await bot.process_commands(message)
         
 @bot.event
