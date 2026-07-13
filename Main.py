@@ -48,7 +48,7 @@ async def on_message(message):
         await message.channel.send("No problem, glad I could help! :D")
         
     if filip in message.content.lower() or philip in message.content.lower():
-        await message.channel.send("We don't talk about him... :Dread:"
+        await message.channel.send("We don't talk about him... :Dread:")
 
 #Commands:
 
