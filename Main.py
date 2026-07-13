@@ -48,9 +48,9 @@ async def on_message(message):
         
 @bot.event
 async def on_message(message):
-if message.author == bot.user:
-    return
-if filip in message.content.lower() or philip in message.content.lower():
+    if message.author == bot.user:
+        return
+    if filip in message.content.lower() or philip in message.content.lower():
         await message.channel.send("We don't talk about him... :Dread:")
 
 #Commands:
