@@ -133,7 +133,7 @@ async def Weather(ctx, wtype = None):
     elif 300 <= weather_description <= 321:
         weather_cond = "There's a light drizzle outside. I hear that's a good omen :white_sun_rain_cloud:."
     elif 500 <= weather_description <= 532: 
-        weather_cond = "It's raining like CRAZY out there. My mask is erroding ;( :cloud_rain:."
+        weather_cond = "It's raining like CRAZY out there. My mask is eroding ;( :cloud_rain:."
     elif 600 <= weather_description <= 622: 
         weather_cond = "IT'S SNOWING :D. Time for a snowball fight! :snowman2:."
     elif weather_description == 701: 
@@ -161,9 +161,9 @@ async def Weather(ctx, wtype = None):
 
 
     if wtype == "K":
-        await ctx.send(f"The temperature in Moab Utah is {temperature_K:.2f}°K, with a high of {temp_high_K:.2f}°K and a low of {temp_low_K:.2f}°K. It feels like {feels_like_K:.2f}°F.{weather_cond}")
+        await ctx.send(f"The temperature in Moab Utah is {temperature_K:.2f}°K, with a high of {temp_high_K:.2f}°K and a low of {temp_low_K:.2f}°K. It feels like {feels_like_K:.2f}°K.{weather_cond}")
     elif wtype == "C":
-        await ctx.send(f"The temperature in Moab Utah is {temperature_C:.2f}°C, with a high of {temp_high_C:.2f}°C and a low of {temp_low_C:.2f}°C. It feels like {feels_like_C:.2f}°F. {weather_cond}")
+        await ctx.send(f"The temperature in Moab Utah is {temperature_C:.2f}°C, with a high of {temp_high_C:.2f}°C and a low of {temp_low_C:.2f}°C. It feels like {feels_like_C:.2f}°C. {weather_cond}")
     elif wtype == "F":
         await ctx.send(f"The temperature in Moab Utah is {temperature_F:.2f}°F, with a high of {temp_high_F:.2f}°F and a low of {temp_low_F:.2f}°F. It feels like {feels_like_F:.2f}°F. {weather_cond}")
     elif wtype == None:
