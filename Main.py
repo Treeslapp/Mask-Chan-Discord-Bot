@@ -2,6 +2,7 @@ import discord
 import discord.colour
 import asyncio
 from discord.ext import commands
+from discord.ext.commands import cooldown
 import logging
 from dotenv import load_dotenv
 import os
@@ -43,7 +44,11 @@ async def on_member_join(member):
 async def on_message(message):
     if message.author == bot.user:
         return
-    if "thank you mask-chan" in message.content.lower() or "thank you mask chan" in message.content.lower() or "thank you maskchan" in message.content.lower():
+    if "thank you mask-chan" in message.content.lower():
+        await message.channel.send("No problem, glad I could help! :D")
+    elif "thank you mask chan" in message.content.lower():
+        await message.channel.send("No problem, glad I could help! :D")
+    elif "thank you maskchan" in message.content.lower():
         await message.channel.send("No problem, glad I could help! :D")
         
     await bot.process_commands(message)
@@ -165,6 +170,7 @@ async def Weather(ctx, wtype = None):
         await ctx.send("Follow your command with either F for Farenheit, C for Celsius, or K for Kelvin")
 
 @bot.command()
+@cooldown(1, 10000)
 async def Survey(ctx):
     embed1 = discord.Embed(title = "Welcome to the OFFICIAL, SUPER-SPECIAL, SERVER QUESTIONNAIRE™", color = purple, description = "You will be asked a series of three 'yes/no' questions. Your answer to these questions determines your roles within the server. Each role has associated channels & pings. Are you ready?")
     embed2 = discord.Embed(title = "🪨 ROCK & STONE ⛏️", color = purple, description = "Do you play, or have you ever played, Deep Rock Galactic?\n(Both choices grant access to videogame-related channels)")
@@ -291,8 +297,10 @@ async def Survey(ctx):
         poll_exit = await ctx.send(embed = embed_exit)
         await ctx.send(f"You took too long to react, {user.mention}. Session exited.")
 
+    Survey.reset_cooldown(ctx)
 
 @bot.command()
+@cooldown(1, 10000)
 async def GameRoles(ctx):
     game_roles_embed = discord.Embed(title = "🎮 GAME ROLES", color = purple, description = ("While 'Game Roles' is active, a user can assign themselves roles to receive pings about specific video games.\n"
                                                                                           "Enter **the role** you would like to receive based on its associated games in the following list:\n"
@@ -364,8 +372,11 @@ async def GameRoles(ctx):
     except asyncio.TimeoutError:
         await ctx.send(f"You took too long to send a message, {ctx.author.mention}. Session exited")
         checking_roles = False
+        
+    GameRoles.reset_cooldown(ctx)
 
 @bot.command()
+@cooldown(1, 10000)
 async def HMS(ctx):
     embed_HMS = discord.Embed(title = "HAMON - MASKS - SPIN", color = purple, description = ("You are now playing Hamon-Masks-Spin. This is Mask-chan's version of rock paper scissors\n"
                                                                             "Hamon purifies vampires(masks),\n"
@@ -457,6 +468,8 @@ async def HMS(ctx):
     except asyncio.TimeoutError:
         await ctx.send(f"{ctx.author.mention} Your session timed out")
         await ctx.send(f"(Final score - {HMS_score_user} {ctx.author.display_name} : {HMS_score_bot} {bot.user.display_name})")
+
+    HMS.reset_cooldown(ctx)
 
 
 bot.run(token, log_handler = handler, log_level = logging.DEBUG)
