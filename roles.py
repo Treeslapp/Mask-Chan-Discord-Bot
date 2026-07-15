@@ -16,4 +16,4 @@ rp_roles = ["Anchor (Hard R)", "Castlevania Heroes", "Victims of Night", "Real/F
 
 special_roles = ["Pokemon Master", "Kick Perms for Joe", "Reduced Perms ඞ", "Sweaty Virgin", "Gamer Gorl"]
 
-rps_loss = "Mask-chan's Bitch"
+rps_loss = "Mask-Chan's Bitch"
