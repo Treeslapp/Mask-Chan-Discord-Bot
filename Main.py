@@ -394,9 +394,9 @@ async def GameRoles(ctx):
 @cooldown(1, 10000)
 async def HMS(ctx):
     embed_HMS = discord.Embed(title = "HAMON - MASKS - SPIN", color = purple, description = ("You are now playing Hamon-Masks-Spin. This is Mask-chan's version of rock paper scissors\n"
-                                                                            "Hamon purifies vampires(masks),\n"
-                                                                            "vampires(masks) infect spin-users,\n"
-                                                                            "spin-users breach hamon's regeneration.\n"
+                                                                            "- **Hamon** purifies vampires(masks),\n"
+                                                                            "- **vampires(masks)** infect spin-users,\n"
+                                                                            "- **spin-users** breach hamon's regeneration.\n"
                                                                             "Test Mask-chan's limits, and see how often you can win! Good luck >:D.\n"
                                                                             "\n* You can begin the program by typing hamon, masks, or spin. Mask-chan will respond"
                                                                             "\n* You can exit at any time by typing 'Araki', or by waiting 60 seconds."
