@@ -1,6 +1,7 @@
 import discord
 import discord.colour
 import asyncio
+import typing
 from discord.ext import commands
 from discord.ext.commands import cooldown
 import logging
@@ -38,7 +39,7 @@ async def on_ready():
 
 @bot.event
 async def on_member_join(member):
-    await member.send(f"Welcome to the cult, {member.mention}. You can assign yourself server roles by typing 'MSurvey' and 'MGameRoles' in channels that have access to Mask-chan")
+    await member.send(f"Welcome to the cult, {member.mention}. You can assign yourself server roles by typing 'MSurvey' and 'MGameRoles' in channels that have access to Mask-Chan")
 
 @bot.event
 async def on_message(message):
@@ -70,27 +71,47 @@ async def askhelp(ctx):
     help_menu = await ctx.send(embed = embed)
 
 @bot.command()
-async def Flirt(ctx, user: discord.Member):
+async def Flirt(ctx, target: typing.Union[discord.Member, str]):
+
+    member_list = []
+
+    random_member_list = []
 
     flirt_list = []
 
     flirt = random.choice(flirts)
     flirt_list.append(flirt)
 
-    target = user or ctx.author
-    if target == ctx.author:
-        await ctx.send(f"I'm not here to get spicy with you, {ctx.author.display_name} :rolling_eyes:")
-        await ctx.send(f"{target.mention} {flirt_list[0]}")
-    elif target == bot.user:
-        await ctx.send(f"I'd rather flirt with myself than you, {ctx.author.display_name}")
-        await ctx.send(f"{target.mention} {flirt_list[0]}")
-    elif target == user:
-        await ctx.send(f"{target.mention} {flirt_list[0]}")
-    else:
-        await ctx.send(f"I can't find anyone to flirt with. Looks like I'm alone again ;(")
+    for memb in ctx.guild.members:
+        if not memb.bot:
+            member_list.append(memb)
+
+    if isinstance(target, str):
+        if target.lower() == "random":
+
+            rand_memb = random.choice(member_list)
+            random_member_list.append(rand_memb)
+
+            await ctx.send(f"{random_member_list[0].mention} {flirt_list[0]}")
+
+            random_member_list.clear()
+
+    if isinstance(target, discord.Member):
+        if target == ctx.author:
+            await ctx.send(f"I'm not here to get spicy with you, {ctx.author.display_name} :rolling_eyes:")
+            await ctx.send(f"{target.mention} {flirt_list[0]}")
+        elif target.id == os.getenv('BOT_USER_ID'):
+            await ctx.send(f"I'd rather flirt with myself than you, {ctx.author.display_name}")
+            await ctx.send(f"{target.mention} {flirt_list[0]}")
+        elif target.bot:
+            await ctx.send(f"I wonder if they'll hear me...")
+            await ctx.send(f"{target.mention} {flirt_list[0]}")
+        elif target == target:
+            await ctx.send(f"{target.mention} {flirt_list[0]}")
+        else:
+            await ctx.send(f"I can't find anyone to flirt with. Looks like I'm alone again ;(")
 
     flirt_list.clear()
-    print(flirt_list)
 
 @bot.command()
 async def Weather(ctx, wtype = None):
@@ -138,7 +159,7 @@ async def Weather(ctx, wtype = None):
         weather_cond = "Mmm... Smells like a barbecue. WAIT, IT'S SMOKE! :fire::dash:."
     elif weather_description == 731 or weather_description == 751 or weather_description == 761:
         weather_cond = "*cough cough*, It's dust as far as the eye can see :desert::cloud_tornado:."
-    elif weather_description == 741 or weather_description: 
+    elif weather_description == 741: 
         weather_cond = "It's foggy, I can barely see a thing :face_in_clouds:."
     elif weather_description == 762:
         weather_cond = "It finally burst. KRAKATOA! The skies are black with smoke and ash :volcano:."
@@ -155,11 +176,11 @@ async def Weather(ctx, wtype = None):
 
 
     if wtype == "K":
-        await ctx.send(f"The temperature in Moab Utah is {temperature_K:.2f}°K, with a high of {temp_high_K:.2f}°K and a low of {temp_low_K:.2f}°K. It feels like {feels_like_K:.2f}°K.{weather_cond}")
+        await ctx.send(f"The temperature in Moab Utah is {temperature_K:.2f}°K. It feels like {feels_like_K:.2f}°K.{weather_cond}")
     elif wtype == "C":
-        await ctx.send(f"The temperature in Moab Utah is {temperature_C:.2f}°C, with a high of {temp_high_C:.2f}°C and a low of {temp_low_C:.2f}°C. It feels like {feels_like_C:.2f}°C. {weather_cond}")
+        await ctx.send(f"The temperature in Moab Utah is {temperature_C:.2f}°C. It feels like {feels_like_C:.2f}°C. {weather_cond}")
     elif wtype == "F":
-        await ctx.send(f"The temperature in Moab Utah is {temperature_F:.2f}°F, with a high of {temp_high_F:.2f}°F and a low of {temp_low_F:.2f}°F. It feels like {feels_like_F:.2f}°F. {weather_cond}")
+        await ctx.send(f"The temperature in Moab Utah is {temperature_F:.2f}°F. It feels like {feels_like_F:.2f}°F. {weather_cond}")
     elif wtype == None:
         await ctx.send("Follow your command with either F for Farenheit, C for Celsius, or K for Kelvin")
 
@@ -384,6 +405,8 @@ async def HMS(ctx):
     HMS_Choices_user = ("Hamon", "Masks", "Mask", "Spin", "Stand", "Araki")
     HMS_Choice_bot = []
 
+    HMS_loss = discord.utils.get(ctx.guild.roles, name = rps_loss)
+
     def HMS_Check(message):
         return (message.author == ctx.author and
          message.channel == ctx.channel and
@@ -456,6 +479,10 @@ async def HMS(ctx):
                 await ctx.send("Wait, what were we doing? I completely forgot.")
                 await ctx.send(f"(Final score - {HMS_score_user} {ctx.author.display_name} : {HMS_score_bot} {bot.user.display_name})")
                 playing_HMS = False
+
+            if HMS_score_bot >= HMS_score_user + 3 and HMS_loss:
+                await ctx.author.add_roles(HMS_loss)
+                await ctx.send("HAH! Looks like I'm totally kicking your ass. I want you to remember this. Check your roles :)")
         
             HMS_Choice_bot.clear()
 
