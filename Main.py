@@ -103,7 +103,7 @@ async def Flirt(ctx, target: typing.Union[discord.Member, str]):
         elif target.id == os.getenv('BOT_USER_ID'):
             await ctx.send(f"I'd rather flirt with myself than you, {ctx.author.display_name}")
             await ctx.send(f"{target.mention} {flirt_list[0]}")
-        elif target.bot:
+        elif target.bot and target.id != os.getenv('BOT_USER_ID'):
             await ctx.send(f"I wonder if they'll hear me...")
             await ctx.send(f"{target.mention} {flirt_list[0]}")
         elif target == target:
