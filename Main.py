@@ -481,8 +481,14 @@ async def HMS(ctx):
                 playing_HMS = False
 
             if HMS_score_bot >= HMS_score_user + 3 and HMS_loss:
-                await ctx.author.add_roles(HMS_loss)
-                await ctx.send("HAH! Looks like I'm totally kicking your ass. I want you to remember this. Check your roles :)")
+                if HMS_loss not in ctx.author.roles:
+                    await ctx.author.add_roles(HMS_loss)
+                    await ctx.send("HAH! Looks like I'm totally kicking your ass. I want you to remember this. Check your roles :)")
+                elif HMS_loss in ctx.author.roles:
+                    await ctx.send("HAH! Looks like I'm totally kicking your ass.")
+            elif HMS_score_user >= HMS_score_bot + 3:
+                await ctx.send("Stop making me your bitch! You're so mean :sob:")
+                
         
             HMS_Choice_bot.clear()
 
