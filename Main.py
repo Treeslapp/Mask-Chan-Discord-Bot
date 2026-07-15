@@ -11,7 +11,7 @@ import random
 import requests
 from keep_alive import keep_alive
 from flirts import flirts
-from roles import roles, game_roles, rp_roles, special_roles
+from roles import roles, game_roles, rp_roles, special_roles, rps_loss
 
 load_dotenv()
 
